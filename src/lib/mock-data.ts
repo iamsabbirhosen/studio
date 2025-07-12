@@ -1,3 +1,4 @@
+
 import type { HistoricalDataPoint, PumpLog } from '@/lib/types';
 
 export const historicalData: HistoricalDataPoint[] = [

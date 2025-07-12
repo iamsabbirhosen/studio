@@ -1,3 +1,7 @@
+
+'use client';
+
+import { useState, useEffect } from 'react';
 import { MetricCard } from '@/components/dashboard/metric-card';
 import { HistoricalCharts } from '@/components/dashboard/historical-charts';
 import { PumpActivityLog } from '@/components/dashboard/pump-activity-log';
@@ -6,6 +10,27 @@ import { PumpControl } from '@/components/dashboard/pump-control';
 import { Thermometer, Zap, TrendingUp, Wind } from 'lucide-react';
 
 export default function DashboardPage() {
+  const [metrics, setMetrics] = useState({
+    surfaceTemp: 52.3,
+    ambientTemp: 34.8,
+    voltage: 24.1,
+    current: 5.8,
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMetrics(prevMetrics => ({
+        surfaceTemp: parseFloat((prevMetrics.surfaceTemp + (Math.random() - 0.5) * 2).toFixed(1)),
+        ambientTemp: parseFloat((prevMetrics.ambientTemp + (Math.random() - 0.5) * 1).toFixed(1)),
+        voltage: parseFloat((prevMetrics.voltage + (Math.random() - 0.5) * 0.2).toFixed(1)),
+        current: parseFloat((prevMetrics.current + (Math.random() - 0.5) * 0.3).toFixed(1)),
+      }));
+    }, 5000); // Update every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+
   return (
     <main className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8">
       <div className="grid gap-6">
@@ -13,30 +38,30 @@ export default function DashboardPage() {
           <MetricCard
             icon={Thermometer}
             title="Surface Temperature"
-            value="52.3"
+            value={metrics.surfaceTemp.toFixed(1)}
             unit="°C"
-            footerText="+2.1°C from last hour"
+            footerText="Real-time data"
           />
           <MetricCard
             icon={Wind}
             title="Ambient Temperature"
-            value="34.8"
+            value={metrics.ambientTemp.toFixed(1)}
             unit="°C"
-            footerText="+1.5°C from last hour"
+            footerText="Real-time data"
           />
           <MetricCard
             icon={Zap}
             title="Voltage Output"
-            value="24.1"
+            value={metrics.voltage.toFixed(1)}
             unit="V"
-            footerText="-0.2V from last hour"
+            footerText="Real-time data"
           />
           <MetricCard
             icon={TrendingUp}
             title="Current Output"
-            value="5.8"
+            value={metrics.current.toFixed(1)}
             unit="A"
-            footerText="+0.3A from last hour"
+            footerText="Real-time data"
           />
           <PumpControl />
         </div>

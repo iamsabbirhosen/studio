@@ -1,10 +1,45 @@
 
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartConfig } from '@/components/ui/chart';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, ComposedChart } from 'recharts';
-import { historicalData, pumpLogs } from '@/lib/mock-data';
+import type { HistoricalDataPoint, PumpLog } from '@/lib/types';
+
+const generateInitialHistoricalData = (): HistoricalDataPoint[] => {
+  const data: HistoricalDataPoint[] = [];
+  for (let i = 6; i >= 0; i--) {
+    const time = new Date();
+    time.setHours(time.getHours() - i);
+    data.push({
+      time: time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      surfaceTemp: 40 + Math.random() * 15,
+      ambientTemp: 28 + Math.random() * 6,
+      voltage: 23.5 + Math.random(),
+      power: 130 + Math.random() * 15,
+    });
+  }
+  return data;
+};
+
+const generateInitialPumpLogs = (): PumpLog[] => {
+    const logs: PumpLog[] = [];
+    for (let i = 1; i <= 5; i++) {
+        const time = new Date();
+        time.setMinutes(time.getMinutes() - i * 45);
+        const preCoolTemp = 60 + Math.random() * 15;
+        const postCoolTemp = preCoolTemp - (10 + Math.random() * 10);
+        logs.push({
+            id: i,
+            timestamp: time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }),
+            preCoolTemp: parseFloat(preCoolTemp.toFixed(1)),
+            postCoolTemp: parseFloat(postCoolTemp.toFixed(1)),
+            duration: '60s',
+        });
+    }
+    return logs.reverse();
+};
 
 const chartConfig = {
   surfaceTemp: {
@@ -37,12 +72,53 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const coolingChartData = pumpLogs.map(log => ({
-  ...log,
-  efficiencyGain: ((log.preCoolTemp - log.postCoolTemp) * 0.4).toFixed(2),
-}));
-
 export function HistoricalCharts() {
+  const [historicalData, setHistoricalData] = useState<HistoricalDataPoint[]>(generateInitialHistoricalData);
+  const [pumpLogs, setPumpLogs] = useState<PumpLog[]>(generateInitialPumpLogs);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHistoricalData(prevData => {
+        const newData = [...prevData.slice(1)];
+        const lastPoint = prevData[prevData.length - 1];
+        const time = new Date();
+        newData.push({
+          time: time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          surfaceTemp: Math.max(30, lastPoint.surfaceTemp + (Math.random() - 0.45) * 3),
+          ambientTemp: Math.max(20, lastPoint.ambientTemp + (Math.random() - 0.5) * 2),
+          voltage: Math.max(22, lastPoint.voltage + (Math.random() - 0.5) * 0.5),
+          power: Math.max(110, lastPoint.power + (Math.random() - 0.45) * 5),
+        });
+        return newData;
+      });
+
+      if (Math.random() < 0.1) { // 10% chance to add a new pump log
+        setPumpLogs(prevLogs => {
+            const newLogs = [...prevLogs.slice(1)];
+            const time = new Date();
+            const preCoolTemp = 60 + Math.random() * 15;
+            const postCoolTemp = preCoolTemp - (10 + Math.random() * 10);
+            newLogs.push({
+                id: (prevLogs[prevLogs.length-1]?.id || 0) + 1,
+                timestamp: time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }),
+                preCoolTemp: parseFloat(preCoolTemp.toFixed(1)),
+                postCoolTemp: parseFloat(postCoolTemp.toFixed(1)),
+                duration: '60s',
+            });
+            return newLogs;
+        });
+      }
+
+    }, 15000); // Update every 15 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const coolingChartData = pumpLogs.map(log => ({
+    ...log,
+    efficiencyGain: parseFloat(((log.preCoolTemp - log.postCoolTemp) * 0.5 + 10).toFixed(2)),
+  }));
+
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
       <Card>
