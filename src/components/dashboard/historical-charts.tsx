@@ -2,8 +2,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartConfig } from '@/components/ui/chart';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { historicalData } from '@/lib/mock-data';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { historicalData, pumpLogs } from '@/lib/mock-data';
 
 const chartConfig = {
   surfaceTemp: {
@@ -22,11 +22,28 @@ const chartConfig = {
     label: 'Power (W)',
     color: 'hsl(var(--accent))',
   },
+  preCoolTemp: {
+    label: 'Pre-Cool Temp (°C)',
+    color: 'hsl(var(--destructive))',
+  },
+  postCoolTemp: {
+    label: 'Post-Cool Temp (°C)',
+    color: 'hsl(var(--primary))',
+  },
+  tempDrop: {
+    label: 'Temp Drop (°C)',
+    color: 'hsl(var(--chart-2))',
+  },
 } satisfies ChartConfig;
+
+const coolingChartData = pumpLogs.map(log => ({
+  ...log,
+  tempDrop: log.preCoolTemp - log.postCoolTemp,
+}));
 
 export function HistoricalCharts() {
   return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
       <Card>
         <CardHeader>
           <CardTitle>Temperature Trends</CardTitle>
@@ -49,7 +66,7 @@ export function HistoricalCharts() {
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>Power & Voltage Trends</CardTitle>
+          <CardTitle>Power & Voltage</CardTitle>
         </CardHeader>
         <CardContent>
           <ChartContainer config={chartConfig} className="h-[250px] w-full">
@@ -63,6 +80,26 @@ export function HistoricalCharts() {
                 <Line yAxisId="left" type="monotone" dataKey="voltage" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} name="Voltage" />
                 <Line yAxisId="right" type="monotone" dataKey="power" stroke="hsl(var(--accent))" strokeWidth={2} dot={false} name="Power" />
               </LineChart>
+            </ResponsiveContainer>
+          </ChartContainer>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Cooling Efficiency</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ChartContainer config={chartConfig} className="h-[250px] w-full">
+            <ResponsiveContainer>
+              <BarChart data={coolingChartData} margin={{ top: 5, right: 20, left: -10, bottom: 0 }}>
+                <CartesianGrid vertical={false} strokeDasharray="3 3" />
+                <XAxis dataKey="timestamp" tick={{ fill: 'hsl(var(--muted-foreground))' }} fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis />
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <Bar dataKey="preCoolTemp" fill="hsl(var(--destructive))" radius={4} name="Pre-Cool Temp" />
+                <Bar dataKey="postCoolTemp" fill="hsl(var(--primary))" radius={4} name="Post-Cool Temp" />
+                <Bar dataKey="tempDrop" fill="hsl(var(--chart-2))" radius={4} name="Temp Drop" />
+              </BarChart>
             </ResponsiveContainer>
           </ChartContainer>
         </CardContent>

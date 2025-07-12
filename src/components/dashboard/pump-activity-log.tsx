@@ -6,10 +6,15 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { pumpLogs } from '@/lib/mock-data';
 import { Badge } from '@/components/ui/badge';
 import { ArrowDown, ArrowUp } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-export function PumpActivityLog() {
+interface PumpActivityLogProps {
+  className?: string;
+}
+
+export function PumpActivityLog({ className }: PumpActivityLogProps) {
   return (
-    <Card className="h-full">
+    <Card className={cn("h-full", className)}>
       <CardHeader>
         <CardTitle>Pump Activity Logs</CardTitle>
         <CardDescription>A log of recent automated cooling cycles.</CardDescription>

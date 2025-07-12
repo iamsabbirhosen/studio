@@ -7,8 +7,13 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Skeleton } from '@/components/ui/skeleton';
 import { Lightbulb, AlertTriangle, Sparkles } from 'lucide-react';
 import { generateInsights } from '@/app/actions';
+import { cn } from '@/lib/utils';
 
-export function EfficiencyInsights() {
+interface EfficiencyInsightsProps {
+  className?: string;
+}
+
+export function EfficiencyInsights({ className }: EfficiencyInsightsProps) {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,7 +34,7 @@ export function EfficiencyInsights() {
   };
 
   return (
-    <Card className="h-full flex flex-col">
+    <Card className={cn("h-full flex flex-col", className)}>
       <CardHeader>
         <div className="flex items-center gap-2">
           <Sparkles className="h-6 w-6 text-primary" />
