@@ -29,13 +29,13 @@
     --chart-3: 20 14% 40%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --sidebar-background: 20 14% 8%;
-    --sidebar-foreground: 40 27% 94%;
+    --sidebar-background: 30 10% 98%;
+    --sidebar-foreground: 20 14% 4%;
     --sidebar-primary: 30 100% 60%;
     --sidebar-primary-foreground: 30 60% 5%;
-    --sidebar-accent: 20 14% 12%;
-    --sidebar-accent-foreground: 40 27% 98%;
-    --sidebar-border: 20 14% 15%;
+    --sidebar-accent: 30 10% 90%;
+    --sidebar-accent-foreground: 20 14% 4%;
+    --sidebar-border: 30 10% 85%;
     --sidebar-ring: 38 100% 65%;
   }
   .dark {
