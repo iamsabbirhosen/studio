@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import './globals.css';
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarTrigger, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarContent, SidebarFooter, SidebarInset } from '@/components/ui/sidebar';
 import { Toaster } from "@/components/ui/toaster"
-import { Sun, Settings, LayoutDashboard, LogOut, ListCollapse } from 'lucide-react';
+import { Settings, LayoutDashboard, LogOut, ListCollapse } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ThemeProvider } from '@/components/theme-provider';
@@ -33,12 +34,13 @@ export default function RootLayout({
               <Sidebar collapsible="icon" variant="sidebar" className="border-r border-sidebar-border">
                 <SidebarHeader className="p-4">
                   <Link href="/" className="flex items-center gap-2">
-                    <Button variant="ghost" size="icon" className="text-primary hover:bg-primary/10">
-                      <Sun className="h-6 w-6" />
-                    </Button>
-                    <span className="font-bold text-lg text-sidebar-foreground group-data-[collapsible=icon]:hidden">
-                      SolarisEye
-                    </span>
+                    <Image 
+                      src="https://i.ibb.co/rRttXwph/Solar-Shield-official-logo-for-app.png" 
+                      alt="SolarisEye Logo" 
+                      width={150} 
+                      height={40} 
+                      className="w-auto h-7 group-data-[collapsible=icon]:h-8"
+                    />
                   </Link>
                 </SidebarHeader>
                 <SidebarContent>
