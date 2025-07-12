@@ -1,8 +1,9 @@
+
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartConfig } from '@/components/ui/chart';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, ComposedChart } from 'recharts';
 import { historicalData, pumpLogs } from '@/lib/mock-data';
 
 const chartConfig = {
@@ -30,15 +31,15 @@ const chartConfig = {
     label: 'Post-Cool Temp (°C)',
     color: 'hsl(var(--primary))',
   },
-  tempDrop: {
-    label: 'Temp Drop (°C)',
+  efficiencyGain: {
+    label: 'Efficiency Gain (%)',
     color: 'hsl(var(--chart-2))',
   },
 } satisfies ChartConfig;
 
 const coolingChartData = pumpLogs.map(log => ({
   ...log,
-  tempDrop: log.preCoolTemp - log.postCoolTemp,
+  efficiencyGain: ((log.preCoolTemp - log.postCoolTemp) * 0.4).toFixed(2),
 }));
 
 export function HistoricalCharts() {
@@ -91,15 +92,16 @@ export function HistoricalCharts() {
         <CardContent>
           <ChartContainer config={chartConfig} className="h-[250px] w-full">
             <ResponsiveContainer>
-              <BarChart data={coolingChartData} margin={{ top: 5, right: 20, left: -10, bottom: 0 }}>
+              <ComposedChart data={coolingChartData} margin={{ top: 5, right: 20, left: -10, bottom: 0 }}>
                 <CartesianGrid vertical={false} strokeDasharray="3 3" />
                 <XAxis dataKey="timestamp" tick={{ fill: 'hsl(var(--muted-foreground))' }} fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis />
+                <YAxis yAxisId="left" orientation="left" stroke="hsl(var(--primary))" tick={{ fill: 'hsl(var(--primary))' }} fontSize={12} />
+                <YAxis yAxisId="right" orientation="right" stroke="hsl(var(--chart-2))" tick={{ fill: 'hsl(var(--chart-2))' }} fontSize={12} unit="%" />
                 <ChartTooltip content={<ChartTooltipContent />} />
-                <Bar dataKey="preCoolTemp" fill="hsl(var(--destructive))" radius={4} name="Pre-Cool Temp" />
-                <Bar dataKey="postCoolTemp" fill="hsl(var(--primary))" radius={4} name="Post-Cool Temp" />
-                <Bar dataKey="tempDrop" fill="hsl(var(--chart-2))" radius={4} name="Temp Drop" />
-              </BarChart>
+                <Bar yAxisId="left" dataKey="preCoolTemp" fill="hsl(var(--destructive))" radius={4} name="Pre-Cool Temp" />
+                <Bar yAxisId="left" dataKey="postCoolTemp" fill="hsl(var(--primary))" radius={4} name="Post-Cool Temp" />
+                <Line yAxisId="right" type="monotone" dataKey="efficiencyGain" stroke="hsl(var(--chart-2))" strokeWidth={2} dot={{r: 4, fill: 'hsl(var(--chart-2))' }} name="Efficiency Gain (%)" unit="%" />
+              </ComposedChart>
             </ResponsiveContainer>
           </ChartContainer>
         </CardContent>
