@@ -39,7 +39,7 @@ export default function RootLayout({
                       alt="SolarisEye Logo" 
                       width={150} 
                       height={40} 
-                      className="w-auto h-9 group-data-[collapsible=icon]:h-10"
+                      className="w-auto h-12 group-data-[collapsible=icon]:h-14 animate-pulse-slow"
                     />
                   </Link>
                 </SidebarHeader>
@@ -101,7 +101,7 @@ export default function RootLayout({
                                 alt="SolarisEye Logo"
                                 width={120}
                                 height={32}
-                                className="h-8 w-auto"
+                                className="h-10 w-auto animate-pulse-slow"
                             />
                         </Link>
                     </div>
