@@ -11,9 +11,9 @@ export const historicalData: HistoricalDataPoint[] = [
 ];
 
 export const pumpLogs: PumpLog[] = [
-    { id: 1, timestamp: '12:45 PM', preCoolTemp: 51.5, postCoolTemp: 46.2, duration: '60s' },
-    { id: 2, timestamp: '01:30 PM', preCoolTemp: 55.8, postCoolTemp: 49.1, duration: '60s' },
-    { id: 3, timestamp: '02:15 PM', preCoolTemp: 52.3, postCoolTemp: 47.5, duration: '60s' },
-    { id: 4, timestamp: '03:05 PM', preCoolTemp: 49.8, postCoolTemp: 45.1, duration: '60s' },
-    { id: 5, timestamp: '03:50 PM', preCoolTemp: 48.5, postCoolTemp: 44.2, duration: '60s' },
+    { id: 1, timestamp: '12:45 PM', preCoolTemp: 58.5, postCoolTemp: 43.2, duration: '60s' },
+    { id: 2, timestamp: '01:30 PM', preCoolTemp: 65.2, postCoolTemp: 45.1, duration: '60s' },
+    { id: 3, timestamp: '02:15 PM', preCoolTemp: 72.3, postCoolTemp: 48.5, duration: '60s' },
+    { id: 4, timestamp: '03:05 PM', preCoolTemp: 68.8, postCoolTemp: 46.1, duration: '60s' },
+    { id: 5, timestamp: '03:50 PM', preCoolTemp: 75.5, postCoolTemp: 50.2, duration: '60s' },
 ];
