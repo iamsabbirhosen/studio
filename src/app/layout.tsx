@@ -35,7 +35,7 @@ export default function RootLayout({
                 <SidebarHeader className="p-4">
                   <Link href="/" className="flex items-center gap-2">
                     <Image 
-                      src="https://i.ibb.co/rRttXwph/Solar-Shield-official-logo-for-app.png" 
+                      src="https://i.ibb.co/W43qSKgP/Solar-Shield-official-logo-for-app-removebg-preview.png" 
                       alt="SolarisEye Logo" 
                       width={150} 
                       height={40} 
@@ -97,7 +97,7 @@ export default function RootLayout({
                         <SidebarTrigger className="md:hidden" />
                         <Link href="/" className="md:hidden">
                             <Image
-                                src="https://i.ibb.co/rRttXwph/Solar-Shield-official-logo-for-app.png"
+                                src="https://i.ibb.co/W43qSKgP/Solar-Shield-official-logo-for-app-removebg-preview.png"
                                 alt="SolarisEye Logo"
                                 width={120}
                                 height={32}
