@@ -39,7 +39,7 @@ export default function RootLayout({
                       alt="SolarisEye Logo" 
                       width={150} 
                       height={40} 
-                      className="w-auto h-7 group-data-[collapsible=icon]:h-8"
+                      className="w-auto h-9 group-data-[collapsible=icon]:h-10"
                     />
                   </Link>
                 </SidebarHeader>
@@ -92,9 +92,20 @@ export default function RootLayout({
               </Sidebar>
 
               <SidebarInset>
-                <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-md sm:px-6">
-                  <SidebarTrigger className="md:hidden" />
-                  <h1 className="flex-1 text-base font-semibold sm:text-xl">Dashboard</h1>
+                <header className="sticky top-0 z-10 flex h-14 items-center justify-between gap-4 border-b bg-background/80 px-4 backdrop-blur-md sm:px-6">
+                    <div className="flex items-center gap-4">
+                        <SidebarTrigger className="md:hidden" />
+                        <Link href="/" className="md:hidden">
+                            <Image
+                                src="https://i.ibb.co/rRttXwph/Solar-Shield-official-logo-for-app.png"
+                                alt="SolarisEye Logo"
+                                width={120}
+                                height={32}
+                                className="h-8 w-auto"
+                            />
+                        </Link>
+                    </div>
+                    <h1 className="hidden flex-1 text-base font-semibold sm:text-xl md:block">Dashboard</h1>
                 </header>
                 {children}
               </SidebarInset>
