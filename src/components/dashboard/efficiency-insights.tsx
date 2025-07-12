@@ -37,7 +37,7 @@ export function EfficiencyInsights() {
         </div>
         <CardDescription>AI-powered suggestions to optimize your solar setup.</CardDescription>
       </CardHeader>
-      <CardContent className="flex-grow">
+      <CardContent className="flex-grow min-h-[240px]">
         {isLoading ? (
           <div className="space-y-4">
             <Skeleton className="h-16 w-full" />
@@ -60,7 +60,7 @@ export function EfficiencyInsights() {
             ))}
           </ul>
         ) : (
-          <div className="text-center text-muted-foreground pt-4">
+          <div className="text-center text-muted-foreground pt-4 flex flex-col items-center justify-center h-full">
             <p>Click the button to generate efficiency insights.</p>
           </div>
         )}

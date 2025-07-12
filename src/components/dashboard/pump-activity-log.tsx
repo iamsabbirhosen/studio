@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { pumpLogs } from '@/lib/mock-data';
 import { Badge } from '@/components/ui/badge';
-import { ArrowDown, ArrowUp, Thermometer } from 'lucide-react';
+import { ArrowDown, ArrowUp } from 'lucide-react';
 
 export function PumpActivityLog() {
   return (
@@ -15,7 +15,7 @@ export function PumpActivityLog() {
         <CardDescription>Historical record of automated cooling cycles.</CardDescription>
       </CardHeader>
       <CardContent>
-        <ScrollArea className="h-[300px]">
+        <ScrollArea className="h-[calc(100vh-22rem)]">
           <Table>
             <TableHeader>
               <TableRow>
@@ -27,12 +27,12 @@ export function PumpActivityLog() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {pumpLogs.map((log) => {
+              {[...pumpLogs, ...pumpLogs, ...pumpLogs].map((log, index) => {
                 const tempChange = (log.postCoolTemp - log.preCoolTemp).toFixed(1);
                 const isDecrease = parseFloat(tempChange) < 0;
 
                 return (
-                  <TableRow key={log.id}>
+                  <TableRow key={`${log.id}-${index}`}>
                     <TableCell className="font-medium">{log.timestamp}</TableCell>
                     <TableCell className="text-center">{log.preCoolTemp}°C</TableCell>
                     <TableCell className="text-center">{log.postCoolTemp}°C</TableCell>

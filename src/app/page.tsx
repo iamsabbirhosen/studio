@@ -58,13 +58,8 @@ export default function DashboardPage() {
 
         <HistoricalCharts />
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            <PumpActivityLog />
-          </div>
-          <div className="lg:col-span-1">
-            <EfficiencyInsights />
-          </div>
+        <div className="grid grid-cols-1 gap-6">
+          <EfficiencyInsights />
         </div>
       </div>
     </main>

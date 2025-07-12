@@ -3,7 +3,7 @@ import Link from 'next/link';
 import './globals.css';
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarTrigger, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarContent, SidebarFooter, SidebarInset } from '@/components/ui/sidebar';
 import { Toaster } from "@/components/ui/toaster"
-import { Sun, Settings, LayoutDashboard, LogOut } from 'lucide-react';
+import { Sun, Settings, LayoutDashboard, LogOut, ListCollapse } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 
@@ -45,6 +45,14 @@ export default function RootLayout({
                       <Link href="/">
                         <LayoutDashboard />
                         <span>Dashboard</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton href="/activity" asChild tooltip="Activity">
+                      <Link href="/activity">
+                        <ListCollapse />
+                        <span>Activity</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
