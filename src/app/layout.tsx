@@ -90,9 +90,9 @@ export default function RootLayout({
               </Sidebar>
 
               <SidebarInset>
-                <header className="flex h-14 items-center gap-4 border-b bg-card px-6">
+                <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-md sm:px-6">
                   <SidebarTrigger className="md:hidden" />
-                  <h1 className="flex-1 text-xl font-semibold">Dashboard</h1>
+                  <h1 className="flex-1 text-base font-semibold sm:text-xl">Dashboard</h1>
                 </header>
                 {children}
               </SidebarInset>

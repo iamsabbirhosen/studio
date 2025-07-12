@@ -15,13 +15,13 @@ export function PumpActivityLog() {
         <CardDescription>A log of recent automated cooling cycles.</CardDescription>
       </CardHeader>
       <CardContent>
-        <ScrollArea className="h-[240px]">
+        <ScrollArea className="h-[300px] sm:h-[400px]">
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Timestamp</TableHead>
-                <TableHead className="text-center">Pre-Cool Temp</TableHead>
-                <TableHead className="text-center">Post-Cool Temp</TableHead>
+                <TableHead className="hidden text-center sm:table-cell">Pre-Cool Temp</TableHead>
+                <TableHead className="hidden text-center sm:table-cell">Post-Cool Temp</TableHead>
                 <TableHead className="text-center">Temp Change</TableHead>
                 <TableHead className="text-right">Duration</TableHead>
               </TableRow>
@@ -34,8 +34,8 @@ export function PumpActivityLog() {
                 return (
                   <TableRow key={`${log.id}-${index}`}>
                     <TableCell className="font-medium">{log.timestamp}</TableCell>
-                    <TableCell className="text-center">{log.preCoolTemp}°C</TableCell>
-                    <TableCell className="text-center">{log.postCoolTemp}°C</TableCell>
+                    <TableCell className="hidden text-center sm:table-cell">{log.preCoolTemp}°C</TableCell>
+                    <TableCell className="hidden text-center sm:table-cell">{log.postCoolTemp}°C</TableCell>
                     <TableCell className="text-center">
                        <Badge variant={isDecrease ? "secondary" : "destructive"} className="gap-1">
                           {isDecrease ? 

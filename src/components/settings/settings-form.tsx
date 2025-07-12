@@ -44,7 +44,7 @@ export function SettingsForm() {
     toast({
       title: 'Settings Saved',
       description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+        <pre className="mt-2 w-full max-w-[340px] rounded-md bg-slate-950 p-4 overflow-x-auto">
           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
         </pre>
       ),
@@ -60,8 +60,8 @@ export function SettingsForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Cooling Temperature Threshold (°C)</FormLabel>
-              <div className="flex items-center gap-4">
-                <FormControl>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <FormControl className="flex-1">
                   <Slider
                     min={30}
                     max={80}
@@ -71,10 +71,9 @@ export function SettingsForm() {
                       setTempValue(value[0]);
                       field.onChange(value[0]);
                     }}
-                    className="flex-1"
                   />
                 </FormControl>
-                <div className="w-20">
+                <div className="w-full sm:w-24">
                   <Input type="number" value={tempValue} onChange={(e) => {
                       const val = Number(e.target.value);
                       setTempValue(val);

@@ -17,31 +17,31 @@ export function PumpControl() {
         <Sun className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent>
-        <div className="flex items-center justify-between">
-          <div className="flex flex-col">
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center justify-between">
             <div className="text-2xl font-bold">Optimal</div>
-            <div className="flex items-center gap-2 pt-1">
-              <p className="text-xs text-muted-foreground">Pump Status:</p>
-              <Badge
-                variant="outline"
-                className={
-                  isPumpOn
-                    ? 'border-green-500 bg-green-500/10 text-green-700 dark:text-green-400 animate-pulse'
-                    : 'border-red-500 bg-red-500/10 text-red-700 dark:text-red-400'
-                }
-              >
-                {isPumpOn ? 'COOLING' : 'OFF'}
-              </Badge>
-            </div>
+              <div className="flex flex-col items-center gap-2">
+                <Label htmlFor="pump-toggle" className="text-xs text-muted-foreground">Manual</Label>
+                <Switch
+                  id="pump-toggle"
+                  checked={isPumpOn}
+                  onCheckedChange={setIsPumpOn}
+                  aria-label="Toggle cooling pump"
+                />
+              </div>
           </div>
-          <div className="flex flex-col items-center gap-2">
-             <Label htmlFor="pump-toggle" className="text-xs text-muted-foreground">Manual</Label>
-            <Switch
-              id="pump-toggle"
-              checked={isPumpOn}
-              onCheckedChange={setIsPumpOn}
-              aria-label="Toggle cooling pump"
-            />
+          <div className="flex items-center gap-2 pt-1">
+            <p className="text-xs text-muted-foreground">Pump Status:</p>
+            <Badge
+              variant="outline"
+              className={
+                isPumpOn
+                  ? 'border-green-500 bg-green-500/10 text-green-700 dark:text-green-400 animate-pulse'
+                  : 'border-red-500 bg-red-500/10 text-red-700 dark:text-red-400'
+              }
+            >
+              {isPumpOn ? 'COOLING' : 'OFF'}
+            </Badge>
           </div>
         </div>
       </CardContent>
