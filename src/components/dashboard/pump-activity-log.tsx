@@ -12,10 +12,10 @@ export function PumpActivityLog() {
     <Card className="h-full">
       <CardHeader>
         <CardTitle>Pump Activity Logs</CardTitle>
-        <CardDescription>Historical record of automated cooling cycles.</CardDescription>
+        <CardDescription>A log of recent automated cooling cycles.</CardDescription>
       </CardHeader>
       <CardContent>
-        <ScrollArea className="h-[calc(100vh-22rem)]">
+        <ScrollArea className="h-[240px]">
           <Table>
             <TableHeader>
               <TableRow>
@@ -27,7 +27,7 @@ export function PumpActivityLog() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {[...pumpLogs, ...pumpLogs, ...pumpLogs].map((log, index) => {
+              {pumpLogs.map((log, index) => {
                 const tempChange = (log.postCoolTemp - log.preCoolTemp).toFixed(1);
                 const isDecrease = parseFloat(tempChange) < 0;
 
