@@ -33,9 +33,12 @@ interface PumpActivityLogProps {
 }
 
 export function PumpActivityLog({ className }: PumpActivityLogProps) {
-    const [pumpLogs, setPumpLogs] = useState<PumpLog[]>(generateInitialPumpLogs);
+    const [pumpLogs, setPumpLogs] = useState<PumpLog[]>([]);
 
     useEffect(() => {
+        // Generate initial data on the client side
+        setPumpLogs(generateInitialPumpLogs());
+      
         const interval = setInterval(() => {
             if (Math.random() < 0.2) { // 20% chance to add a new log
                 setPumpLogs(prevLogs => {

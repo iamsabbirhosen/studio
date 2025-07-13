@@ -11,13 +11,21 @@ import { Thermometer, Zap, TrendingUp, Wind } from 'lucide-react';
 
 export default function DashboardPage() {
   const [metrics, setMetrics] = useState({
-    surfaceTemp: 52.3,
-    ambientTemp: 34.8,
-    voltage: 24.1,
-    current: 5.8,
+    surfaceTemp: 0,
+    ambientTemp: 0,
+    voltage: 0,
+    current: 0,
   });
 
   useEffect(() => {
+    // Set initial metrics on client-side to avoid hydration mismatch
+    setMetrics({
+        surfaceTemp: 52.3,
+        ambientTemp: 34.8,
+        voltage: 24.1,
+        current: 5.8,
+    });
+
     const interval = setInterval(() => {
       setMetrics(prevMetrics => ({
         surfaceTemp: parseFloat((prevMetrics.surfaceTemp + (Math.random() - 0.5) * 2).toFixed(1)),

@@ -73,21 +73,26 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function HistoricalCharts() {
-  const [historicalData, setHistoricalData] = useState<HistoricalDataPoint[]>(generateInitialHistoricalData);
-  const [pumpLogs, setPumpLogs] = useState<PumpLog[]>(generateInitialPumpLogs);
+  const [historicalData, setHistoricalData] = useState<HistoricalDataPoint[]>([]);
+  const [pumpLogs, setPumpLogs] = useState<PumpLog[]>([]);
 
   useEffect(() => {
+    // Generate initial data on the client side
+    setHistoricalData(generateInitialHistoricalData());
+    setPumpLogs(generateInitialPumpLogs());
+    
     const interval = setInterval(() => {
       setHistoricalData(prevData => {
+        if (prevData.length === 0) return [];
         const newData = [...prevData.slice(1)];
         const lastPoint = prevData[prevData.length - 1];
         const time = new Date();
         newData.push({
           time: time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          surfaceTemp: Math.max(30, lastPoint.surfaceTemp + (Math.random() - 0.45) * 3),
-          ambientTemp: Math.max(20, lastPoint.ambientTemp + (Math.random() - 0.5) * 2),
-          voltage: Math.max(22, lastPoint.voltage + (Math.random() - 0.5) * 0.5),
-          power: Math.max(110, lastPoint.power + (Math.random() - 0.45) * 5),
+          surfaceTemp: Math.max(30, (lastPoint?.surfaceTemp || 50) + (Math.random() - 0.45) * 3),
+          ambientTemp: Math.max(20, (lastPoint?.ambientTemp || 30) + (Math.random() - 0.5) * 2),
+          voltage: Math.max(22, (lastPoint?.voltage || 24) + (Math.random() - 0.5) * 0.5),
+          power: Math.max(110, (lastPoint?.power || 135) + (Math.random() - 0.45) * 5),
         });
         return newData;
       });
@@ -116,7 +121,7 @@ export function HistoricalCharts() {
 
   const coolingChartData = pumpLogs.map(log => ({
     ...log,
-    efficiencyGain: parseFloat(((log.preCoolTemp - log.postCoolTemp) * 0.5 + 10).toFixed(2)),
+    efficiencyGain: parseFloat(((log.preCoolTemp - log.postCoolTemp) * 0.5 + 15).toFixed(2)),
   }));
 
   return (
