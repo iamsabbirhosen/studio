@@ -1,13 +1,12 @@
+"use client";
 
-'use client';
-
-import { useState, useEffect } from 'react';
-import { MetricCard } from '@/components/dashboard/metric-card';
-import { HistoricalCharts } from '@/components/dashboard/historical-charts';
-import { PumpActivityLog } from '@/components/dashboard/pump-activity-log';
-import { EfficiencyInsights } from '@/components/dashboard/efficiency-insights';
-import { PumpControl } from '@/components/dashboard/pump-control';
-import { Thermometer, Zap, TrendingUp, Wind } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { MetricCard } from "@/components/dashboard/metric-card";
+import { HistoricalCharts } from "@/components/dashboard/historical-charts";
+import { PumpActivityLog } from "@/components/dashboard/pump-activity-log";
+import { EfficiencyInsights } from "@/components/dashboard/efficiency-insights";
+import { PumpControl } from "@/components/dashboard/pump-control";
+import { Thermometer, Zap, TrendingUp, Wind } from "lucide-react";
 
 export default function DashboardPage() {
   const [metrics, setMetrics] = useState({
@@ -18,26 +17,33 @@ export default function DashboardPage() {
   });
 
   useEffect(() => {
-    // Set initial metrics on client-side to avoid hydration mismatch
-    setMetrics({
-        surfaceTemp: 52.3,
-        ambientTemp: 34.8,
-        voltage: 24.1,
-        current: 5.8,
-    });
+    // Fetch real-time weather data for Dhaka
+    async function fetchWeather() {
+      try {
+        const res = await fetch(
+          "https://api.weatherapi.com/v1/current.json?key=f430eb044d11477697d83148251407&q=Dhaka"
+        );
+        const data = await res.json();
+        setMetrics({
+          surfaceTemp: 52.3, // Keep as mock for now
+          ambientTemp: data.current.temp_c,
+          voltage: 24.1,
+          current: 5.8,
+        });
+      } catch (err) {
+        setMetrics({
+          surfaceTemp: 52.3,
+          ambientTemp: 34.8,
+          voltage: 24.1,
+          current: 5.8,
+        });
+      }
+    }
+    fetchWeather();
 
-    const interval = setInterval(() => {
-      setMetrics(prevMetrics => ({
-        surfaceTemp: parseFloat((prevMetrics.surfaceTemp + (Math.random() - 0.5) * 2).toFixed(1)),
-        ambientTemp: parseFloat((prevMetrics.ambientTemp + (Math.random() - 0.5) * 1).toFixed(1)),
-        voltage: parseFloat((prevMetrics.voltage + (Math.random() - 0.5) * 0.2).toFixed(1)),
-        current: parseFloat((prevMetrics.current + (Math.random() - 0.5) * 0.3).toFixed(1)),
-      }));
-    }, 5000); // Update every 5 seconds
-
+    const interval = setInterval(fetchWeather, 600000); // Update every 10 minutes
     return () => clearInterval(interval);
   }, []);
-
 
   return (
     <main className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8">
@@ -77,8 +83,8 @@ export default function DashboardPage() {
         <HistoricalCharts />
 
         <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
-           <EfficiencyInsights className="xl:col-span-1" />
-           <PumpActivityLog className="xl:col-span-2" />
+          <EfficiencyInsights className="xl:col-span-1" />
+          <PumpActivityLog className="xl:col-span-2" />
         </div>
       </div>
     </main>
